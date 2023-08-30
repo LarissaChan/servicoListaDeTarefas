@@ -1,26 +1,18 @@
 using ListaDeTarefasApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using ListaDeTarefasApi.Caching;
 
 [assembly: ApiController]
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddScoped<ICachingService, CachingService>();
-
 builder.Services.AddCors(setup =>
 {
     setup.AddPolicy("default", policy =>
     {
         policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     });
-});
-
-builder.Services.AddStackExchangeRedisCache(o => {
-    o.InstanceName = "instance";
-    o.Configuration = "localhost:7042";
 });
 
 builder.Services.AddControllers();
